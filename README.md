@@ -1,66 +1,210 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
-## About Laravel
+# Documentation du Projet Laravel avec Inertia React
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Ce projet utilise **Laravel** comme backend et **Inertia.js** avec **React** pour le frontend. Il inclut une gestion de configuration via la table `Config` et est conçu pour être facilement configurable et extensible.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Prérequis
 
-## Learning Laravel
+Avant de commencer, assurez-vous d'avoir les éléments suivants installés sur votre machine :
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **PHP** (version 8.0 ou supérieure)
+- **Composer** (pour gérer les dépendances PHP)
+- **Node.js** et **npm** (pour gérer les dépendances JavaScript)
+- **MySQL** ou un autre système de gestion de base de données pris en charge par Laravel
+- **Git** (pour cloner le projet)
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation
 
-## Laravel Sponsors
+1. **Cloner le projet** :
+   Clonez le dépôt GitHub sur votre machine locale :
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+   ```bash
+   git clone https://github.com/Basty0/modele-laravel.git
+   cd modele-laravel
+   ```
 
-### Premium Partners
+2. **Installer les dépendances PHP** :
+   Utilisez Composer pour installer les dépendances PHP :
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+   ```bash
+   composer install
+   ```
 
-## Contributing
+3. **Installer les dépendances JavaScript** :
+   Utilisez npm pour installer les dépendances JavaScript :
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+   ```bash
+   npm install
+   ```
 
-## Code of Conduct
+4. **Configurer l'environnement** :
+   Copiez le fichier `.env.example` et renommez-le en `.env`. Ensuite, configurez les variables d'environnement, notamment les informations de connexion à la base de données :
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=nom_de_la_base_de_donnees
+   DB_USERNAME=utilisateur_mysql
+   DB_PASSWORD=mot_de_passe_mysql
+   ```
 
-## Security Vulnerabilities
+5. **Générer une clé d'application** :
+   Générez une clé d'application Laravel :
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+   ```bash
+   php artisan key:generate
+   ```
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Migration et Initialisation de la Base de Données
+
+1. **Créer la base de données** :
+   Assurez-vous que la base de données spécifiée dans `.env` existe sur votre serveur MySQL. Sinon, créez-la manuellement :
+
+   ```sql
+   CREATE DATABASE nom_de_la_base_de_donnees;
+   ```
+
+2. **Exécuter les migrations** :
+   Exécutez les migrations pour créer les tables dans la base de données :
+
+   ```bash
+   php artisan migrate
+   ```
+
+3. **Décommenter la configuration dans `ConfigServiceProvider.php`** :
+   Après avoir exécuté les migrations, décommentez la partie suivante dans `app/Providers/ConfigServiceProvider.php` pour partager les données de configuration avec Inertia :
+
+   ```php
+   public function boot(): void
+   {
+       // Récupérer les données de la table Config
+       $config = Config::first();
+
+       // Partager les données avec toutes les vues Inertia
+       Inertia::share('config', $config);
+   }
+   ```
+
+   Cela permettra de partager les données de configuration avec toutes les vues React via Inertia.
+
+---
+
+## Lancer le Projet
+
+1. **Démarrer le serveur Laravel** :
+   Démarrez le serveur de développement Laravel :
+
+   ```bash
+   php artisan serve
+   ```
+
+   Le projet sera accessible à l'adresse `http://localhost:8000`.
+
+2. **Compiler les assets React** :
+   Compilez les fichiers JavaScript et CSS avec Vite :
+
+   ```bash
+   npm run dev
+   ```
+
+   Pour la production, utilisez :
+
+   ```bash
+   npm run build
+   ```
+
+---
+
+## Structure du Projet
+
+- **Backend (Laravel)** :
+  - `app/Models/Config.php` : Modèle pour la table `config`.
+  - `app/Providers/ConfigServiceProvider.php` : Provider pour partager les données de configuration avec Inertia.
+  - `database/migrations/` : Contient les migrations pour créer les tables de la base de données.
+
+- **Frontend (Inertia + React)** :
+  - `resources/js/Pages/` : Contient les composants React pour les pages.
+  - `resources/js/Shared/` : Contient les composants React partagés.
+  - `resources/js/app.js` : Point d'entrée de l'application React.
+
+---
+
+## Commandes Utiles
+
+- **Créer une migration** :
+  ```bash
+  php artisan make:migration nom_de_la_migration
+  ```
+
+- **Exécuter les migrations** :
+  ```bash
+  php artisan migrate
+  ```
+
+- **Créer un modèle** :
+  ```bash
+  php artisan make:model NomDuModele
+  ```
+
+- **Créer un contrôleur** :
+  ```bash
+  php artisan make:controller NomDuController
+  ```
+
+- **Créer un middleware** :
+  ```bash
+  php artisan make:middleware NomDuMiddleware
+  ```
+
+---
+
+## Contribution
+
+1. **Créer une branche** :
+   ```bash
+   git checkout -b nom-de-la-branche
+   ```
+
+2. **Faire des modifications** :
+   Effectuez vos modifications et testez-les localement.
+
+3. **Pousser les modifications** :
+   ```bash
+   git add .
+   git commit -m "Description des modifications"
+   git push origin nom-de-la-branche
+   ```
+
+4. **Créer une Pull Request** :
+   Allez sur GitHub et créez une Pull Request pour fusionner vos modifications dans la branche principale.
+
+---
+
+## Auteurs
+
+- [Basty](https://github.com/Basty0)
+
+---
+
+## Licence
+
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+
+---
+
+## Remarques
+
+- Assurez-vous de toujours exécuter `php artisan migrate` après avoir cloné le projet ou après avoir ajouté de nouvelles migrations.
+- Après les migrations, décommentez la partie dans `ConfigServiceProvider.php` pour partager les données de configuration avec Inertia.
+
+---
+
+Cette documentation est un point de départ pour votre projet. N'hésitez pas à l'adapter en fonction de vos besoins spécifiques.
