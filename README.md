@@ -1,6 +1,4 @@
-Merci pour le lien vers votre dépôt GitHub ! Voici une documentation Markdown (`.md`) adaptée à votre projet Laravel avec Inertia React, en tenant compte de votre dépôt et des instructions spécifiques que vous avez fournies.
 
----
 
 # Documentation du Projet Laravel avec Inertia React
 
